@@ -1,135 +1,152 @@
-<html lang="pt" class="[scrollbar-gutter:auto] [scrollbar-width:thin]"><head>
-    <meta charset="utf-8">
+<html lang="pt" class="[scrollbar-gutter:auto] [scrollbar-width:thin]">
+
+<head>
+  <meta charset="utf-8">
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#ffffff">
-    <title>
-      Quizz-us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+    Quizz-us</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png?v=3">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=3" color="#5bbad5">
-    <link rel="shortcut icon" href="/favicon.ico?v=3">
-    <meta name="msapplication-TileColor" content="#2b5797">
-    <meta name="theme-color" content="#ffffff">
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    </script>
-  </head>
-  <body class="bg-gradient-to-r from-neutral-300 to-stone-400 text-stone-800 flex flex-col gap-8 p-8 items-center h-screen">
-    <div class="flex gap-4 flex-col">
-      <div id="score" class="text-md text-center">HighScore:</div>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg?v=3" color="#5bbad5">
+  <link rel="shortcut icon" href="/favicon.ico?v=3">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#ffffff">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  </script>
+</head>
 
-        <div class="w-full min-w-80 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div id="progressbar" class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
-          </div>
+<body
+  class="bg-gradient-to-r from-neutral-300 to-stone-400 text-stone-800 flex flex-col gap-8 p-8 items-center h-screen">
+  <div class="flex gap-4 flex-col">
+    <div id="score" class="text-md text-center">HighScore:</div>
+
+    <div class="w-full min-w-80 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+      <div id="progressbar" class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
     </div>
-<div id="question" class="bg-white text-3xl text-center p-8 rounded-4xl w-full bg-gradient-to-r from-violet-200/50 to-pink-200/50">Que dia é hoje?</div>
-<div id="options" class="flex flex-col gap-4 w-full">
   </div>
-    </body>
-    <script>
-      questions  =[
-        {
-          question: "Que dia é hoje?",
-          options: ["Segunda", "Terça", "Quarta", "Quinta"],
-          answer: "Quarta",
-          points: 100
-        },
-        {
-          question: "Qual é a capital do Brasil?",
-          options: ["Rio de Janeiro", "São Paulo", "Brasília", "Belo Horizonte"],
-          answer: "Brasília",
-          points: 200
-        },
-        {
-          question: "Qual é a capital de Portugal?",
-          options: ["Lisboa", "Porto", "Coimbra", "Faro"],
-          answer: "Lisboa",
-          points: 100
-        },
-        {
-          question: "Qual é a capital da França?",
-          options: ["Paris", "Marselha", "Lyon", "Toulouse"],
-          answer: "Paris",
-          points: 100
-        },
-        {
-          question: "Qual é a capital da Alemanha?",
-          options: ["Berlim", "Munique", "Hamburgo", "Colônia"],
-          answer: "Berlim",
-          points: 100
-        },
-        {
-          question: "Qual é a capital da Espanha?",
-          options: ["Madrid", "Barcelona", "Valência", "Sevilha"],
-          answer: "Madrid",
-          points: 100
-        },
-        {
-          question: "Qual é a capital da Itália?",
-          options: ["Roma", "Milão", "Nápoles", "Turim"],
-          answer: "Roma",
-          points: 100
-        },
-        {
-          question: "Qual é a capital da Argentina?",
-          options: ["Buenos Aires", "Córdoba", "Rosário", "Mendoza"],
-          answer: "Buenos Aires",
-          points: 100
-        },
-        {
-          question: "Qual é a capital do México?",
-          options: ["Cidade do México", "Guadalajara", "Monterrey", "Puebla"],
-          answer: "Cidade do México",
-          points: 100
-        },
-        {
-          question: "Qual é a capital do Canadá?",
-          options: ["Ottawa", "Toronto", "Montreal", "Vancouver"],
-          answer: "Ottawa",
-          points: 100
-        }
-        
-      ] 
-      questions=questions.sort(()=>Math.random()-0.5)
-      document.score = 0
-      if(document.cookie.split("=")[1])
-        highscore = document.cookie.split("=")[1]
-      else
-        highscore = 0
-      document.getElementById("score").innerHTML="HighScore: "+highscore
-      document.currentquestionindex = 0
-      currentquestion = questions[document.currentquestionindex]
-      nextquestion(currentquestion)
-
-    //document.getElementById("question").innerHTML="pergunta 2" 
-    function nextquestion(currentquestion){
-      document.getElementById("progressbar").style.width =(100/10)*(document.currentquestionindex + 1) + "%"
-        document.getElementById("question").innerHTML=currentquestion.question
-         document.getElementById("options").innerHTML=""
-        currentquestion.options.forEach((option, index) => {
-        document.getElementById("options").innerHTML+=`<div onclick="answer('${option}')" class="border-stone-200 p-4 rounded-2xl border-2 w-full text-center">${option}</div>`
-     })
+  <div id="question"
+    class="bg-white text-3xl text-center p-8 rounded-4xl w-full bg-gradient-to-r from-violet-200/50 to-pink-200/50">Que
+    dia é hoje?</div>
+  <div id="options" class="flex flex-col gap-4 w-full">
+  </div>
+</body>
+<script>
+  questions = [
+    {
+      question: "Que dia é hoje?",
+      options: ["Segunda", "Terça", "Quarta", "Quinta"],
+      answer: "Quarta",
+      points: 100
+    },
+    {
+      question: "Qual é a capital do Brasil?",
+      options: ["Rio de Janeiro", "São Paulo", "Brasília", "Belo Horizonte"],
+      answer: "Brasília",
+      points: 200
+    },
+    {
+      question: "Qual é a capital de Portugal?",
+      options: ["Lisboa", "Porto", "Coimbra", "Faro"],
+      answer: "Lisboa",
+      points: 100
+    },
+    {
+      question: "Qual é a capital da França?",
+      options: ["Paris", "Marselha", "Lyon", "Toulouse"],
+      answer: "Paris",
+      points: 100
+    },
+    {
+      question: "Qual é a capital da Alemanha?",
+      options: ["Berlim", "Munique", "Hamburgo", "Colônia"],
+      answer: "Berlim",
+      points: 100
+    },
+    {
+      question: "Qual é a capital da Espanha?",
+      options: ["Madrid", "Barcelona", "Valência", "Sevilha"],
+      answer: "Madrid",
+      points: 100
+    },
+    {
+      question: "Qual é a capital da Itália?",
+      options: ["Roma", "Milão", "Nápoles", "Turim"],
+      answer: "Roma",
+      points: 100
+    },
+    {
+      question: "Qual é a capital da Argentina?",
+      options: ["Buenos Aires", "Córdoba", "Rosário", "Mendoza"],
+      answer: "Buenos Aires",
+      points: 100
+    },
+    {
+      question: "Qual é a capital do México?",
+      options: ["Cidade do México", "Guadalajara", "Monterrey", "Puebla"],
+      answer: "Cidade do México",
+      points: 100
+    },
+    {
+      question: "Qual é a capital do Canadá?",
+      options: ["Ottawa", "Toronto", "Montreal", "Vancouver"],
+      answer: "Ottawa",
+      points: 100
     }
-    
-     function answer(answer){
-      document.score += questions[document.currentquestionindex].answer == answer ? questions[document.currentquestionindex].points : 0
-      if(document.currentquestionindex == 9){
-        document.getElementById("question").innerHTML="Fim"
-        document.getElementById("options").innerHTML=`<div class="border-stone-200 p-4 rounded-2xl border-2 w-full text-center">Pontuação: ${document.score}</div>`
-        document.getElementById("score").innerHTML="HighScore: "+document.score
-        document.cookie = "highscore="+document.score
-        return
-      }
-      currentquestion = questions[++document.currentquestionindex]
-      nextquestion(currentquestion)
-      
-       
-     }
- 
-    
-    </script>
-    </html>
+
+  ]
+  questions = questions.sort(() => Math.random() - 0.5)
+  document.score = 0
+  teste.split(";").forEach((element) => {
+    cookie = element.split("=")
+    if (cookie[0] == "highscore") {
+      highscore = cookie[1]
+    }
+  }
+  );
+
+
+  document.cookie = "highscore=0; max-age=31536000; path=/"
+  if (document.cookie.split("=")[1])
+    highscore = document.cookie.split("=")[1]
+  else
+    highscore = 0
+  document.getElementById("score").innerHTML = "HighScore: " + highscore
+  document.currentquestionindex = 0
+  currentquestion = questions[document.currentquestionindex]
+  nextquestion(currentquestion)
+
+  //document.getElementById("question").innerHTML="pergunta 2" 
+  function nextquestion(currentquestion) {
+    document.getElementById("progressbar").style.width = (100 / 10) * (document.currentquestionindex + 1) + "%"
+    document.getElementById("question").innerHTML = currentquestion.question
+    document.getElementById("options").innerHTML = ""
+    currentquestion.options.forEach((option, index) => {
+      document.getElementById("options").innerHTML += `<div onclick="answer('${option}')" class="border-stone-200 p-4 rounded-2xl border-2 w-full text-center">${option}</div>`
+    })
+  }
+
+  function answer(answer) {
+    document.score += questions[document.currentquestionindex].answer == answer ? questions[document.currentquestionindex].points : 0
+    if (document.currentquestionindex == 9) {
+      document.getElementById("question").innerHTML = "Fim"
+      document.getElementById("options").innerHTML = `<div class="border-stone-200 p-4 rounded-2xl border-2 w-full text-center">Pontuação: ${document.score}</div>`
+      document.getElementById("score").innerHTML = "HighScore: " + document.score
+      document.cookie = "highscore=" + document.score
+      return
+    }
+    currentquestion = questions[++document.currentquestionindex]
+    nextquestion(currentquestion)
+
+
+  }
+
+
+</script>
+
+</html>
