@@ -31,8 +31,8 @@
     </div>
   </div>
   <div id="question"
-    class="bg-white text-3xl text-center p-8 rounded-4xl w-full bg-gradient-to-r from-violet-200/50 to-pink-200/50">Que
-    dia é hoje?</div>
+    class="bg-white text-3xl text-center p-8 rounded-4xl w-full bg-gradient-to-r from-violet-200/50 to-pink-200/50">--
+  </div>
   <div id="options" class="flex flex-col gap-4 w-full">
   </div>
 </body>
@@ -101,8 +101,11 @@
 
   ]
   questions = questions.sort(() => Math.random() - 0.5)
+  document.currentquestionindex = 0
+  currentquestion = questions[document.currentquestionindex]
+  highscore = 0
   document.score = 0
-  teste.split(";").forEach((element) => {
+  document.cookie.split(";").forEach((element) => {
     cookie = element.split("=")
     if (cookie[0] == "highscore") {
       highscore = cookie[1]
@@ -110,15 +113,7 @@
   }
   );
 
-
-  document.cookie = "highscore=0; max-age=31536000; path=/"
-  if (document.cookie.split("=")[1])
-    highscore = document.cookie.split("=")[1]
-  else
-    highscore = 0
   document.getElementById("score").innerHTML = "HighScore: " + highscore
-  document.currentquestionindex = 0
-  currentquestion = questions[document.currentquestionindex]
   nextquestion(currentquestion)
 
   //document.getElementById("question").innerHTML="pergunta 2" 
